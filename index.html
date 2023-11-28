@@ -105,6 +105,9 @@
 	.custom-color {
 		color: #ff8030 !important;
 	}
+	.footer-copyright{
+		background: url('./assets/img/ojai/footer_bg.png') !important;
+	}
 
 	.egg {
 		display: block;
@@ -145,33 +148,46 @@
 		animation: socialEggsAnimationEnter 1s forwards;
 	}
 	.social-egg-animation-leave{
-		transform: translateX(-50px);
+		transform: translateX(0);
 		animation: socialEggsAnimationLeave 1s forwards;
 	}
 
-	.social-egg-animation:nth-child(1), .social-egg-animation-leave:nth-child(1) {
+	.social-egg-animation-leave:nth-child(1){
+		animation-delay: 0.8s;
+	}
+	.social-egg-animation-leave:nth-child(2){
+		animation-delay: 0.6s;
+	}
+	.social-egg-animation-leave:nth-child(3){
+		animation-delay: 0.4s;
+	}
+	.social-egg-animation-leave:nth-child(4){
+		animation-delay: 0.2s;
+	}
+
+	.social-egg-animation:nth-child(1) {
 		animation-delay: 0.2s; /* El primer huevo entra después de 0.2s */
 	}
 
-	.social-egg-animation:nth-child(2), .social-egg-animation-leave:nth-child(2) {
+	.social-egg-animation:nth-child(2) {
 		animation-delay: 0.4s; /* El segundo huevo entra después de 0.4s */
 	}
 
-	.social-egg-animation:nth-child(3), .social-egg-animation-leave:nth-child(3) {
+	.social-egg-animation:nth-child(3){
 		animation-delay: 0.6s; /* El tercer huevo entra después de 0.6s */
 	}
 
-	.social-egg-animation:nth-child(4), .social-egg-animation-leave:nth-child(4) {
+	.social-egg-animation:nth-child(4){
 		animation-delay: 0.8s; /* El cuarto huevo entra después de 0.8s */
 	}
 	@keyframes socialEggsAnimationEnter {
 		0% {
-			transform: translateX(-50px);
 			opacity: 0;
+			transform: translateX(-50px);
 		}
 		100% {
-			transform: translateX(0);
 			opacity: 1;
+			transform: translateX(0);
 		}
 	} 
 
@@ -1062,16 +1078,24 @@
 			const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
 			const {y} = target.getBoundingClientRect();
-
-			if(y < 450){
-				divEggs.style.display = 'block'
-				socialEgss.forEach((element) => element.classList.add('social-egg-animation'))
+			if (currentScroll > lastScrollTop) {
+				if(y < 650){
+					divEggs.style.display = 'block'
+					socialEgss.forEach((element) => element.classList.remove('social-egg-animation-leave'))
+					socialEgss.forEach((element) => element.classList.add('social-egg-animation'))
+				}
 			}
-			else{
-				divEggs.style.display = 'none'
-			}
-
 			
+			else{
+				if (currentScroll < 650) {
+					// Ocultar los elementos
+					socialEgss.forEach((element) => element.classList.remove('social-egg-animation'))
+					socialEgss.forEach((element) => element.classList.add('social-egg-animation-leave'))
+					console.log("ko");
+        		}
+			}
+
+			lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 			
 			
 		}
