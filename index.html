@@ -150,7 +150,6 @@
 		animation: socialEggsAnimationEnter 1s forwards;
 	}
 	.social-egg-animation-leave{
-		transform: translateX(0);
 		animation: socialEggsAnimationLeave 1s forwards;
 	}
 
@@ -195,12 +194,12 @@
 
 	@keyframes socialEggsAnimationLeave {
 		0% {
-			transform: translateX(0px);
-			opacity: 0;
+			transform: translateX(0);
+			opacity: 1;
 		}
 		100% {
 			transform: translateX(-50px);
-			opacity: 1;
+			opacity: 0;
 		}
 	}
 	
@@ -1080,18 +1079,18 @@
 			const {y} = target.getBoundingClientRect();
 			if (currentScroll > lastScrollTop) {
 				if(y < 650){
-					divEggs.style.display = 'block'
-					socialEgss.forEach((element) => element.classList.remove('social-egg-animation-leave'))
+					socialEgss.forEach((element) => element.style.transform = 'translateX(-50px)')
 					socialEgss.forEach((element) => element.classList.add('social-egg-animation'))
+					socialEgss.forEach((element) => element.classList.remove('social-egg-animation-leave'))
 				}
 			}
 			
 			else{
 				if (currentScroll < 650) {
 					// Ocultar los elementos
-					socialEgss.forEach((element) => element.classList.remove('social-egg-animation'))
+					socialEgss.forEach((element) => element.style.transform = 'translateX(0)')
 					socialEgss.forEach((element) => element.classList.add('social-egg-animation-leave'))
-					console.log("ko");
+					socialEgss.forEach((element) => element.classList.remove('social-egg-animation'))
         		}
 			}
 
